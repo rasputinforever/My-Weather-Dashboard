@@ -40,22 +40,36 @@
 
 // Begin Load Page //
 
-//main grid structure established here
+//main grid structure established here: Header, Main, Button Area, City Info Area, Five-Day-Forecast Area
 $('body').append(`
-<header>Header goes Here</header>
+<header></header>
 <main class="pure-g">
-<nav class="pure-u-1-5"><p>buttons go here</p></nav>
+<section id="city-buttons" class="pure-u-1-5"></section>
 <section class="pure-u-4-5">
-    <article id="city-data">Main Area for City data</article>
-    <article id="five-day">5 day forecast</article>
+    <article id="city-data"></article>
+    <article id="five-day"></article>
 </section>
 </main>
 `)
 
 //header
-//$('header').append(`<header class="title-bar"><title class="title-bar-title">My Weather Dashboard</title></header>`);
+$('header').attr('class', 'pure-menu pure-menu-horizontal')
+$('header').append(`<nav class="pure-menu-heading pure-menu-link">My Weather Dashboard</nav>`)
 
-// left section, for buttons
+// left section needs "search city" area and all previously loaded cities as buttons
+$('#city-buttons').append(`
+<form class="pure-form">
+    <fieldset>
+        <p>City Manager</p>
+        <input type="city-name" placeholder="City-Name, ST"/>
+        <button type="submit" class="pure-button pure-button-primary">Search</button>
+    </fieldset>
+</form>
+`)
+    //then all the city buttons from "local storage"
+
+
+
 
 // $('body').append(`<ul class="inline-list">
 // <li><a href="#">Link 1</a></li>
