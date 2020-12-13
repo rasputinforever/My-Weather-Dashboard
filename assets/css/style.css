@@ -1,3 +1,21 @@
+header {
+    background-color: blue;
+}
+
 body {
     background-color: chocolate;
+}
+
+nav {
+    background-color: cornflowerblue;
+    height: 100%;
+}
+
+section {
+    background-color: white;
+}
+
+article {
+    background-color: green;
+    margin: 5px;
 }

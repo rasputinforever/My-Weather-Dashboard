@@ -40,6 +40,35 @@
 
 // Begin Load Page //
 
+//main grid structure established here
+$('body').append(`
+<header>Header goes Here</header>
+<main class="pure-g">
+<nav class="pure-u-1-5"><p>buttons go here</p></nav>
+<section class="pure-u-4-5">
+    <article id="city-data">Main Area for City data</article>
+    <article id="five-day">5 day forecast</article>
+</section>
+</main>
+`)
+
+//header
+//$('header').append(`<header class="title-bar"><title class="title-bar-title">My Weather Dashboard</title></header>`);
+
+// left section, for buttons
+
+// $('body').append(`<ul class="inline-list">
+// <li><a href="#">Link 1</a></li>
+// <li><a href="#">Link 2</a></li>
+// <li><a href="#">Link 3</a></li>
+// <li><a href="#">Link 4</a></li>
+// <li><a href="#">Link 5</a></li>
+// </ul>`)
+
+//main section, for city details
+
+// sub section, for 5-day forecast
+
 // End Load Page //
 
 //New City Button Function
