@@ -56,6 +56,9 @@ $('body').append(`
 $('header').attr('class', 'pure-menu pure-menu-horizontal')
 $('header').append(`<nav class="pure-menu-heading pure-menu-link">My Weather Dashboard</nav>`)
 
+
+
+
 // left section needs "search city" area and all previously loaded cities as buttons
 $('#city-buttons').append(`
 <form class="pure-form">
@@ -66,18 +69,31 @@ $('#city-buttons').append(`
     </fieldset>
 </form>
 `)
+
+//selected city detail
+$('#city-data').append(`
+<div class="pure-menu custom-restricted-width">
+<span class="pure-menu-heading">Your Chosen City's Weather Details</span>
+<ul class="pure-menu-list">
+    <li class="pure-menu-item">
+        <p>Weather Detail</p>
+    </li>
+    <li class="pure-menu-item">
+        <p>Weather Detail</p>
+    </li>
+    <li class="pure-menu-item">
+        <p>Weather Detail</p>
+    </li>
+    <li class="pure-menu-item">
+        <p>Weather Detail</p>
+    </li>
+    <li class="pure-menu-item">
+        <p>Weather Detail</p>
+    </li>
+    <li class="pure-menu-heading">UV Index:</li>
+</ul>
+</div>`)
     //then all the city buttons from "local storage"
-
-
-
-
-// $('body').append(`<ul class="inline-list">
-// <li><a href="#">Link 1</a></li>
-// <li><a href="#">Link 2</a></li>
-// <li><a href="#">Link 3</a></li>
-// <li><a href="#">Link 4</a></li>
-// <li><a href="#">Link 5</a></li>
-// </ul>`)
 
 //main section, for city details
 
