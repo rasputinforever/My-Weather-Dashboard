@@ -56,9 +56,6 @@ $('body').append(`
 $('header').attr('class', 'pure-menu pure-menu-horizontal')
 $('header').append(`<nav class="pure-menu-heading pure-menu-link">My Weather Dashboard</nav>`)
 
-
-
-
 // left section needs "search city" area and all previously loaded cities as buttons
 $('#city-buttons').append(`
 <form class="pure-form">
@@ -69,35 +66,44 @@ $('#city-buttons').append(`
     </fieldset>
 </form>
 `)
+    //that SUBMIT button will have an onclick
+    //buttons will be appended here
 
-//selected city detail
+//selected city detail layout, pick five details to go here
 $('#city-data').append(`
 <div class="pure-menu custom-restricted-width">
-<span class="pure-menu-heading">Your Chosen City's Weather Details</span>
-<ul class="pure-menu-list">
-    <li class="pure-menu-item">
-        <p>Weather Detail</p>
-    </li>
-    <li class="pure-menu-item">
-        <p>Weather Detail</p>
-    </li>
-    <li class="pure-menu-item">
-        <p>Weather Detail</p>
-    </li>
-    <li class="pure-menu-item">
-        <p>Weather Detail</p>
-    </li>
-    <li class="pure-menu-item">
-        <p>Weather Detail</p>
-    </li>
-    <li class="pure-menu-heading">UV Index:</li>
-</ul>
-</div>`)
-    //then all the city buttons from "local storage"
-
-//main section, for city details
+    <span class="pure-menu-heading">Your Chosen City's Weather Details</span>
+    <ul class="pure-menu-list">
+        <li class="pure-menu-item">
+            <p>Weather Detail</p>
+        </li>
+        <li class="pure-menu-item">
+            <p>Weather Detail</p>
+        </li>
+        <li class="pure-menu-item">
+            <p>Weather Detail</p>
+        </li>
+        <li class="pure-menu-item">
+            <p>Weather Detail</p>
+        </li>
+        <li class="pure-menu-item">
+            <p>Weather Detail</p>
+        </li>
+        <li class="pure-menu-heading">UV Index:</li>
+    </ul>
+</div>
+`)
 
 // sub section, for 5-day forecast
+$('#five-day').append(`<p>Five-Day Forecast GRID</p>
+<div class="pure-g">
+    <div class="pure-u-1-5"><p>day</p></div>
+    <div class="pure-u-1-5"><p>day</p></div>
+    <div class="pure-u-1-5"><p>day</p></div>    
+    <div class="pure-u-1-5"><p>day</p></div>
+    <div class="pure-u-1-5"><p>day</p></div>
+</div>`)
+
 
 // End Load Page //
 
