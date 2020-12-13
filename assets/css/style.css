@@ -10,8 +10,20 @@ section {
     background-color: white;
 }
 
-
 article {
     background-color: green;
     margin: 5px;
+}
+
+#five-day {
+    background-color: darkgray;
+}
+
+#five-day ul {
+    background-color: beige;
+    margin: 5px;
+}
+
+#five-day li {
+    background-color: green;
 }
