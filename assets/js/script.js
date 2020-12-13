@@ -95,14 +95,33 @@ $('#city-data').append(`
 `)
 
 // sub section, for 5-day forecast
-$('#five-day').append(`<p>Five-Day Forecast GRID</p>
-<div class="pure-g">
-    <div class="pure-u-1-5"><p>day</p></div>
-    <div class="pure-u-1-5"><p>day</p></div>
-    <div class="pure-u-1-5"><p>day</p></div>    
-    <div class="pure-u-1-5"><p>day</p></div>
-    <div class="pure-u-1-5"><p>day</p></div>
-</div>`)
+$('#five-day').append(`
+<p>Five-Day Forecast GRID</p>
+<div id="days-list" class="pure-g">
+</div>
+`)
+
+//create each day-card
+for (i = 0; i < 5; i++) {
+    $('#days-list').append(`<div id="day-${i}" class="pure-u-1-5"><ul class="pure-menu-list">
+    <li class="pure-menu-item">
+        <p>Weather Detail</p>
+    </li>
+    <li class="pure-menu-item">
+        <p>Weather Detail</p>
+    </li>
+    <li class="pure-menu-item">
+        <p>Weather Detail</p>
+    </li>
+    <li class="pure-menu-item">
+        <p>Weather Detail</p>
+    </li>
+    <li class="pure-menu-item">
+        <p>Weather Detail</p>
+    </li>
+</ul></div>`);
+}
+    
 
 
 // End Load Page //
