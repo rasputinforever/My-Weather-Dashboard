@@ -67,7 +67,7 @@ $('#city-buttons').append(`
 `)
 $('#search-error').hide();
 //search city onclick
-$('#new-city-button').on('click', newCitySubmit);
+$('#new-city-button').on('click', preAPI);
 //city buttons will be appended here ON LOAD
 loadSavedCities();
 
@@ -151,7 +151,7 @@ function loadSavedCities () {
         $('#city-buttons').append(`<button class="loaded-city-button">${city}</button>`)
     });
 
-    $('.loaded-city-button').on('click', queryAPI)
+    $('.loaded-city-button').on('click', preAPI)
 }
 
 
@@ -163,39 +163,65 @@ function loadSavedCities () {
 
 
 //API Function
-function queryAPI() {
-    
+function preAPI() {
+    console.log($(this).attr('class'))
+    console.log($(this).text());
+    console.log($(this).attr('class') === 'loaded-city-button')
+    let cityName = '';
     //basic city data
-    var cityName = $(this).text();
+    if ($(this).attr('class') === 'loaded-city-button') {
+        cityName = $(this).text();
+        queryAPI(cityName);
+    } else {
+        cityName = $(this).prev().val();
+        queryAPI(cityName);
+    };
+    
     console.log(cityName);
-    var queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=3f2c8c7cb5bd8bc4f513f0917931a35c`
+
+
+
+
+
+
+    
 
     // detailed city information
-    $.ajax({
-      url: queryURL,
-      method: "GET"
-    }).then(function(response) {
-        
-        //City Weather Information Inserted into Elements Here        
-        console.log(response)
-        
-        $("#query-city-name").text(response.name + " Weather Report");
-        $("#current-temp").text("Current Tempurature: " + response.main.temp + "  \u00B0F");        
-        $("#feels-like").text("Feels Like: " + response.main.feels_like + "  \u00B0F");
-        $("#humidity").text("Humidity: " + response.main.humidity + "%");        
+    function queryAPI (cityName) {
+        var queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=3f2c8c7cb5bd8bc4f513f0917931a35c`
+        $.ajax({
+            url: queryURL,
+            method: "GET",            
+            success: function(){
+                $('#search-error').hide();
+            },
+            error: function(){
+                $('#search-error').show();
+            }
+       }).then(function(response){           
+            console.log(response);
+            
+            //City Weather Information Inserted into Elements Here      
+            $("#query-city-name").text(response.name + " Weather Report");
+            $("#current-temp").text("Current Tempurature: " + response.main.temp + "  \u00B0F");        
+            $("#feels-like").text("Feels Like: " + response.main.feels_like + "  \u00B0F");
+            $("#humidity").text("Humidity: " + response.main.humidity + "%");        
             //wind direction conversion
             const windArr = [{label: "North",degree: 0},{label: "North-East",degree: 45},{label: "East",degree: 90},{label: "South-East",degree: 135},{label: "Sout",degree: 180},{label: "South-West",degree: 225},{label: "West",degree: 270},{label: "North-West",degree: 315}];            
             let windDir = (windArr[(Math.round((response.wind.deg / 360) * 10))].label)
-        $("#wind-speed").text("Wind Speed: " + response.wind.speed + " mph " + windDir + ", " + response.wind.deg + " degrees");        
-        $("#clouds").text("Cloud Coverage: " + response.clouds.all + "%");
+            $("#wind-speed").text("Wind Speed: " + response.wind.speed + " mph " + windDir + ", " + response.wind.deg + " degrees");        
+            $("#clouds").text("Cloud Coverage: " + response.clouds.all + "%");
+        
+            //coordinates for subsequent API queries
+            console.log('coordinates');
+            console.log(response.coord.lat);
+            console.log(response.coord.lon);
+        
+            //queries based on long/lat go here!
+       });
 
-        //coordinates for subsequent API queries
-        console.log('coordinates');
-        console.log(response.coord.lat);
-        console.log(response.coord.lon);
-
-        //queries based on long/lat go here!
-
-    });
-
+       
+    }
 }
+
+
