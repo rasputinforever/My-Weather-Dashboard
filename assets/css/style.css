@@ -30,14 +30,34 @@
 }
 
 .button-xlarge {
-    font-size: 125%;
+    width: 90%;
+}
+
+#city-name {
+    height: 50px;
+}
+
+#new-city-button {
+    width: 90%;
+}
+
+#city-name {
+    width: 90%;
+    font-size: 80%;
+}
+
+.loaded-city-button {
 }
 
 aside {
     background-color: green;
     padding:5px;
-    margin:5px;    
+    margin:5px;
+    text-align: center;    
 }
+
+
+
 article {
     background-color: green;    
     

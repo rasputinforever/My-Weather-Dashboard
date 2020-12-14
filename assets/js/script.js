@@ -166,11 +166,11 @@ function preAPI() {
     } else {
         cityName = $(this).prev().val();
     };
-    
-    queryAPI(cityName);
+    let elName = $(this).text();
+    queryAPI(cityName, elName);
 
     // detailed city information
-    function queryAPI (cityName) {
+    function queryAPI (cityName, elName) {
         let errCheck = false;
         var queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=3f2c8c7cb5bd8bc4f513f0917931a35c`
         $.ajax({
@@ -178,7 +178,9 @@ function preAPI() {
             method: "GET",            
             success: function(){
                 $('#search-error').hide();
-                newCitySubmit();                
+                if (elName === 'Search') {
+                    newCitySubmit();
+                }
             },
             error: function(){
                 $('#search-error').show();
@@ -193,8 +195,8 @@ function preAPI() {
             $("#feels-like").text("Feels Like: " + response.main.feels_like + "  \u00B0F");
             $("#humidity").text("Humidity: " + response.main.humidity + "%");        
                 //wind direction conversion
-                const windArr = [{label: "North",degree: 0},{label: "North-East",degree: 45},{label: "East",degree: 90},{label: "South-East",degree: 135},{label: "Sout",degree: 180},{label: "South-West",degree: 225},{label: "West",degree: 270},{label: "North-West",degree: 315}];            
-                let windDir = (windArr[(Math.round((response.wind.deg / 360) * 10))].label)
+                const windArr = [{label: "North",degree: 0},{label: "North-East",degree: 45},{label: "East",degree: 90},{label: "South-East",degree: 135},{label: "Sout",degree: 180},{label: "South-West",degree: 225},{label: "West",degree: 270},{label: "North-West",degree: 315},{label: "North",degree: 360}];    
+                let windDir = (windArr[-1 + (Math.round((response.wind.deg / 360) * 10))].label)
             $("#wind-speed").text("Wind Speed: " + response.wind.speed + " mph " + windDir + ", " + response.wind.deg + " degrees");        
             $("#clouds").text("Cloud Coverage: " + response.clouds.all + "%");
         
