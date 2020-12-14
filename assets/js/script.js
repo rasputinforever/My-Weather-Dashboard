@@ -59,8 +59,8 @@ $('header').append(`<nav class="pure-menu-heading pure-menu-link">My Weather Das
 // left section needs "search city" area and all previously loaded cities as buttons
 $('#city-buttons').append(`
 <p>City Manager</p>
-<input id="city-name" placeholder="City-Name, ST"/>
-<button id="city-button" class="pure-button pure-button-primary">Search</button>
+<input id="city-name" placeholder="City, State OR Zip Code"/>
+<button id="new-city-button" class="pure-button pure-button-primary">Search</button>
 `)
 //this error will be shown if there's an error during API load
 $('#city-buttons').append(`
@@ -68,34 +68,35 @@ $('#city-buttons').append(`
 `)
 $('#search-error').hide();
 //search city onclick
-$('#city-button').on('click', newCitySubmit);
+$('#new-city-button').on('click', newCitySubmit);
 //city buttons will be appended here ON LOAD
-
+loadSavedCities();
 
 //selected city detail layout, pick five details to go here
 $('#city-data').append(`
 <div class="pure-menu custom-restricted-width">
-    <span class="pure-menu-heading">Your Chosen City's Weather Details</span>
+    <span id="query-city-name" class="pure-menu-heading"></span>
     <ul class="pure-menu-list">
         <li class="pure-menu-item">
-            <p>Weather Detail</p>
+            <p id="current-temp"></p>
         </li>
         <li class="pure-menu-item">
-            <p>Weather Detail</p>
+            <p id="feels-like"></p>
         </li>
         <li class="pure-menu-item">
-            <p>Weather Detail</p>
+            <p id="humidity"></p>
         </li>
         <li class="pure-menu-item">
-            <p>Weather Detail</p>
+            <p id="wind-speed"></p>
         </li>
         <li class="pure-menu-item">
-            <p>Weather Detail</p>
+            <p id="clouds"></p>
         </li>
         <li class="pure-menu-heading">UV Index:</li>
     </ul>
 </div>
 `)
+
 
 // sub section, for 5-day forecast
 $('#five-day').append(`
@@ -134,6 +135,12 @@ function newCitySubmit () {
     console.log("hello from " + newCityName)
 }
 
+function loadSavedCities () {
+    $('#city-buttons').append(`<button class="loaded-city-button">Salem, Oregon</button>`)
+    $('.loaded-city-button').on('click', queryAPI)
+}
+
+
 // load city buttons
     //load local history
     //kill all buttons class = city button
@@ -142,3 +149,39 @@ function newCitySubmit () {
 
 
 //API Function
+function queryAPI() {
+    
+    //basic city data
+    var cityName = $(this).text();
+    console.log(cityName);
+    var queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=3f2c8c7cb5bd8bc4f513f0917931a35c`
+
+    // detailed city information
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(response) {
+        
+        //City Weather Information Inserted into Elements Here        
+        
+        
+        $("#query-city-name").text(response.name + " Weather Report");
+        $("#current-temp").text("Current Tempurature: " + response.main.temp + "  \u00B0F");        
+        $("#feels-like").text("Feels Like: " + response.main.feels_like + "  \u00B0F");
+        $("#humidity").text("Humidity: " + response.main.humidity + "%");        
+            //wind direction conversion
+            const windArr = [{label: "North",degree: 0},{label: "North-East",degree: 45},{label: "East",degree: 90},{label: "South-East",degree: 135},{label: "Sout",degree: 180},{label: "South-West",degree: 225},{label: "West",degree: 270},{label: "North-West",degree: 315}];            
+            let windDir = (windArr[(Math.round((response.wind.deg / 360) * 10))].label)
+        $("#wind-speed").text("Wind Speed: " + response.wind.speed + " mph " + windDir + ", " + response.wind.deg + " degrees");        
+        $("#clouds").text("Cloud Coverage: " + response.clouds.all + "%");
+
+        //coordinates for subsequent API queries
+        console.log('coordinates');
+        console.log(response.coord.lat);
+        console.log(response.coord.lon);
+
+        //queries based on long/lat go here!
+
+    });
+
+}
