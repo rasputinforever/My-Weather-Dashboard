@@ -131,27 +131,45 @@ for (i = 0; i < 5; i++) {
 //New City Button Function
 function newCitySubmit () {
     newCityName = $('#city-name').val();
-    $('#city-buttons').append(`<button class="loaded-city-button">${newCityName}</button>`)
-
+    duplicateCheck = false;
     var citiesToSave = [];
 
     $('.loaded-city-button').each(function(){
+        
         citiesToSave.push($(this).text());
+        
+        //dupe check
+        if ($(this).text() === newCityName) {
+            duplicateCheck = true;
+        }
     });
+
+    if (!duplicateCheck) {            
+        //prevent duplicate!
+        $('#city-buttons').append(`<button class="loaded-city-button">${newCityName}</button>`)
+    }
 
     console.log(citiesToSave);
     localStorage.setItem('localHistory', JSON.stringify(citiesToSave))
+
+
+    $('.loaded-city-button').off();
+    $('.loaded-city-button').on('click', preAPI);
+
 }
 
 function loadSavedCities () {
     savedCities = [];
     savedCities = JSON.parse(localStorage.getItem('localHistory'));
     
-    savedCities.forEach(function(city) {
-        $('#city-buttons').append(`<button class="loaded-city-button">${city}</button>`)
-    });
-
-    $('.loaded-city-button').on('click', preAPI)
+    //skip if null
+    if (savedCities != null) {
+        savedCities.forEach(function(city) {
+            $('#city-buttons').append(`<button class="loaded-city-button">${city}</button>`)
+        });
+    }
+    $('.loaded-city-button').off();
+    $('.loaded-city-button').on('click', preAPI);
 }
 
 
@@ -164,27 +182,15 @@ function loadSavedCities () {
 
 //API Function
 function preAPI() {
-    console.log($(this).attr('class'))
-    console.log($(this).text());
-    console.log($(this).attr('class') === 'loaded-city-button')
     let cityName = '';
     //basic city data
     if ($(this).attr('class') === 'loaded-city-button') {
         cityName = $(this).text();
-        queryAPI(cityName);
     } else {
         cityName = $(this).prev().val();
-        queryAPI(cityName);
     };
     
-    console.log(cityName);
-
-
-
-
-
-
-    
+    queryAPI(cityName);
 
     // detailed city information
     function queryAPI (cityName) {
@@ -194,6 +200,8 @@ function preAPI() {
             method: "GET",            
             success: function(){
                 $('#search-error').hide();
+                newCitySubmit();
+                
             },
             error: function(){
                 $('#search-error').show();
