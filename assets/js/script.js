@@ -171,6 +171,7 @@ function preAPI() {
 
     // detailed city information
     function queryAPI (cityName) {
+        let errCheck = false;
         var queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=3f2c8c7cb5bd8bc4f513f0917931a35c`
         $.ajax({
             url: queryURL,
@@ -181,9 +182,11 @@ function preAPI() {
             },
             error: function(){
                 $('#search-error').show();
+                errCheck = true;
             }
        }).then(function(response){       
-            
+            if (!errCheck) {
+                
             //City Weather Information Inserted into Elements Here      
             $("#query-city-name").text(response.name + " Weather Report");
             $("#current-temp").text("Current Tempurature: " + response.main.temp + "  \u00B0F");        
@@ -225,6 +228,7 @@ function preAPI() {
                     </ul></div>`);
                 }
             });
+            }
        });       
     }
 }
