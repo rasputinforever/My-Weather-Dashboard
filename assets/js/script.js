@@ -125,7 +125,7 @@ function newCitySubmit () {
 
     //prevent duplicate buttons!
     if (!duplicateCheck) {            
-        $('#city-buttons').append(`<button class="loaded-city-button">${newCityName}</button>`)
+        $('#city-buttons').append(`<button class="button-xlarge button-secondary pure-button loaded-city-button">${newCityName}</button>`)
     }
     localStorage.setItem('localHistory', JSON.stringify(citiesToSave))
 
@@ -142,7 +142,7 @@ function loadSavedCities () {
     //skip if null
     if (savedCities != null) {
         savedCities.forEach(function(city) {
-            $('#city-buttons').append(`<button class="loaded-city-button">${city}</button>`)
+            $('#city-buttons').append(`<button class="button-xlarge button-secondary pure-button loaded-city-button">${city}</button>`)
         });
     }
     $('.loaded-city-button').off();
@@ -161,7 +161,7 @@ function loadSavedCities () {
 function preAPI() {
     let cityName = '';
     //basic city data
-    if ($(this).attr('class') === 'loaded-city-button') {
+    if ($(this).attr('class') === 'button-xlarge button-secondary pure-button loaded-city-button') {
         cityName = $(this).text();
     } else {
         cityName = $(this).prev().val();
@@ -189,9 +189,9 @@ function preAPI() {
             $("#current-temp").text("Current Tempurature: " + response.main.temp + "  \u00B0F");        
             $("#feels-like").text("Feels Like: " + response.main.feels_like + "  \u00B0F");
             $("#humidity").text("Humidity: " + response.main.humidity + "%");        
-            //wind direction conversion
-            const windArr = [{label: "North",degree: 0},{label: "North-East",degree: 45},{label: "East",degree: 90},{label: "South-East",degree: 135},{label: "Sout",degree: 180},{label: "South-West",degree: 225},{label: "West",degree: 270},{label: "North-West",degree: 315}];            
-            let windDir = (windArr[(Math.round((response.wind.deg / 360) * 10))].label)
+                //wind direction conversion
+                const windArr = [{label: "North",degree: 0},{label: "North-East",degree: 45},{label: "East",degree: 90},{label: "South-East",degree: 135},{label: "Sout",degree: 180},{label: "South-West",degree: 225},{label: "West",degree: 270},{label: "North-West",degree: 315}];            
+                let windDir = (windArr[(Math.round((response.wind.deg / 360) * 10))].label)
             $("#wind-speed").text("Wind Speed: " + response.wind.speed + " mph " + windDir + ", " + response.wind.deg + " degrees");        
             $("#clouds").text("Cloud Coverage: " + response.clouds.all + "%");
         
@@ -224,8 +224,6 @@ function preAPI() {
                     </li>
                     </ul></div>`);
                 }
-
-
             });
        });       
     }
