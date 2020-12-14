@@ -58,16 +58,19 @@ $('header').append(`<nav class="pure-menu-heading pure-menu-link">My Weather Das
 
 // left section needs "search city" area and all previously loaded cities as buttons
 $('#city-buttons').append(`
-<form class="pure-form">
-    <fieldset>
-        <p>City Manager</p>
-        <input type="city-name" placeholder="City-Name, ST"/>
-        <button type="submit" class="pure-button pure-button-primary">Search</button>
-    </fieldset>
-</form>
+<p>City Manager</p>
+<input id="city-name" placeholder="City-Name, ST"/>
+<button id="city-button" class="pure-button pure-button-primary">Search</button>
 `)
-    //that SUBMIT button will have an onclick
-    //buttons will be appended here
+//this error will be shown if there's an error during API load
+$('#city-buttons').append(`
+<p id="search-error">City Not Found! Try Again!</p>
+`)
+$('#search-error').hide();
+//search city onclick
+$('#city-button').on('click', newCitySubmit);
+//city buttons will be appended here ON LOAD
+
 
 //selected city detail layout, pick five details to go here
 $('#city-data').append(`
@@ -121,11 +124,21 @@ for (i = 0; i < 5; i++) {
     </li>
 </ul></div>`);
 }
-    
-
 
 // End Load Page //
 
 //New City Button Function
+
+function newCitySubmit () {
+    newCityName = $('#city-name').val();
+    console.log("hello from " + newCityName)
+}
+
+// load city buttons
+    //load local history
+    //kill all buttons class = city button
+    //add each button from load in reverse order
+        //default city = special formatting button
+
 
 //API Function
