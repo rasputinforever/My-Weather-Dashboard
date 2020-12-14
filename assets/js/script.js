@@ -39,7 +39,6 @@
     //save to local storage
 
 // Begin Load Page //
-
 //main grid structure established here: Header, Main, Button Area, City Info Area, Five-Day-Forecast Area
 $('body').append(`
 <header></header>
@@ -100,43 +99,58 @@ $('#city-data').append(`
 
 // sub section, for 5-day forecast
 $('#five-day').append(`
-<p>Five-Day Forecast GRID</p>
+<p>Five-Day Forecast</p>
 <div id="days-list" class="pure-g">
 </div>
 `)
 
-//create each day-card
+//create each day-card => 
 for (i = 0; i < 5; i++) {
     $('#days-list').append(`<div id="day-${i}" class="pure-u-1-5"><ul class="pure-menu-list">
     <li class="pure-menu-item">
-        <p>Weather Detail</p>
+        <p></p>
     </li>
     <li class="pure-menu-item">
-        <p>Weather Detail</p>
+        <p></p>
     </li>
     <li class="pure-menu-item">
-        <p>Weather Detail</p>
+        <p></p>
     </li>
     <li class="pure-menu-item">
-        <p>Weather Detail</p>
+        <p></p>
     </li>
     <li class="pure-menu-item">
-        <p>Weather Detail</p>
+        <p></p>
     </li>
 </ul></div>`);
 }
 
+
 // End Load Page //
 
 //New City Button Function
-
 function newCitySubmit () {
     newCityName = $('#city-name').val();
-    console.log("hello from " + newCityName)
+    $('#city-buttons').append(`<button class="loaded-city-button">${newCityName}</button>`)
+
+    var citiesToSave = [];
+
+    $('.loaded-city-button').each(function(){
+        citiesToSave.push($(this).text());
+    });
+
+    console.log(citiesToSave);
+    localStorage.setItem('localHistory', JSON.stringify(citiesToSave))
 }
 
 function loadSavedCities () {
-    $('#city-buttons').append(`<button class="loaded-city-button">Salem, Oregon</button>`)
+    savedCities = [];
+    savedCities = JSON.parse(localStorage.getItem('localHistory'));
+    
+    savedCities.forEach(function(city) {
+        $('#city-buttons').append(`<button class="loaded-city-button">${city}</button>`)
+    });
+
     $('.loaded-city-button').on('click', queryAPI)
 }
 
@@ -163,7 +177,7 @@ function queryAPI() {
     }).then(function(response) {
         
         //City Weather Information Inserted into Elements Here        
-        
+        console.log(response)
         
         $("#query-city-name").text(response.name + " Weather Report");
         $("#current-temp").text("Current Tempurature: " + response.main.temp + "  \u00B0F");        
