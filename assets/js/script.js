@@ -43,8 +43,8 @@
 $('body').append(`
 <header></header>
 <main class="pure-g">
-<section id="city-buttons" class="pure-u-1-5"></section>
-<section class="pure-u-4-5">
+<aside id="city-buttons" class="pure-u-1-5"></aside>
+<section class="pure-u-3-5">
     <article id="city-data"></article>
     <article id="five-day"></article>
 </section>

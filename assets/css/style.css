@@ -24,20 +24,36 @@
 
 .button-secondary {
     background: rgb(66, 184, 221);
+    
+    margin: 5px;
     /* this is a light blue */
-}
-.button-xsmall {
-    font-size: 70%;
-}
-
-.button-small {
-    font-size: 85%;
-}
-
-.button-large {
-    font-size: 110%;
 }
 
 .button-xlarge {
     font-size: 125%;
+}
+
+aside {
+    background-color: green;
+    padding:5px;
+    margin:5px;    
+}
+article {
+    background-color: green;    
+    
+    margin:5px;
+}
+
+#city-data {
+    padding:5px;
+}
+
+#five-day {
+    padding:5px;
+
+}
+
+#five-day ul {
+    background-color: blue;
+    margin: 5px;
 }
