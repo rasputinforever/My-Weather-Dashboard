@@ -104,26 +104,6 @@ $('#five-day').append(`
 </div>
 `)
 
-//create each day-card => 
-for (i = 0; i < 5; i++) {
-    $('#days-list').append(`<div id="day-${i}" class="pure-u-1-5"><ul class="pure-menu-list">
-    <li class="pure-menu-item">
-        <p></p>
-    </li>
-    <li class="pure-menu-item">
-        <p></p>
-    </li>
-    <li class="pure-menu-item">
-        <p></p>
-    </li>
-    <li class="pure-menu-item">
-        <p></p>
-    </li>
-    <li class="pure-menu-item">
-        <p></p>
-    </li>
-</ul></div>`);
-}
 
 
 // End Load Page //
@@ -215,15 +195,39 @@ function preAPI() {
             $("#wind-speed").text("Wind Speed: " + response.wind.speed + " mph " + windDir + ", " + response.wind.deg + " degrees");        
             $("#clouds").text("Cloud Coverage: " + response.clouds.all + "%");
         
-            //coordinates for subsequent API queries
-            console.log('coordinates');
-            console.log(response.coord.lat);
-            console.log(response.coord.lon);
-        
             //queries based on long/lat go here!
-       });
 
-       
+            fiveDayURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${response.coord.lat}&lon=${response.coord.lon}&units=imperial&exclude=hourly,minutely&appid=3f2c8c7cb5bd8bc4f513f0917931a35c`
+            $.ajax({
+            url: fiveDayURL,
+            method: "GET"
+            }).then(function(forecast) {
+                    
+                $('#days-list').empty();
+                //create each day-card => with general info about them and icons
+                for (i = 0; i < 5; i++) {   
+                    $('#days-list').append(`<div class="pure-u-1-5 day-forecast"><ul class="pure-menu-list">
+                    <li class="pure-menu-item">
+                        <img src="http://openweathermap.org/img/wn/${forecast.daily[i].weather[0].icon}.png">
+                    </li>
+                    <li class="pure-menu-item">
+                        <p>${forecast.daily[i].temp.day}</p>
+                    </li>
+                    <li class="pure-menu-item">
+                        <p>${forecast.daily[i].temp.night}</p>
+                    </li>
+                    <li class="pure-menu-item">
+                        <p>${forecast.daily[i].weather[0].description}</p>
+                    </li>
+                    <li class="pure-menu-item">
+                        <p>${forecast.daily[i].clouds}</p>
+                    </li>
+                    </ul></div>`);
+                }
+
+
+            });
+       });       
     }
 }
 
