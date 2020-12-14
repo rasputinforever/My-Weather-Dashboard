@@ -134,34 +134,31 @@ function newCitySubmit () {
     duplicateCheck = false;
     var citiesToSave = [];
 
-    $('.loaded-city-button').each(function(){
-        
-        citiesToSave.push($(this).text());
-        
+    //creates array of all city buttons
+    $('.loaded-city-button').each(function(){        
+        citiesToSave.push($(this).text());        
         //dupe check
         if ($(this).text() === newCityName) {
             duplicateCheck = true;
         }
     });
 
+    //prevent duplicate buttons!
     if (!duplicateCheck) {            
-        //prevent duplicate!
         $('#city-buttons').append(`<button class="loaded-city-button">${newCityName}</button>`)
     }
-
-    console.log(citiesToSave);
     localStorage.setItem('localHistory', JSON.stringify(citiesToSave))
 
-
+    //remove all event clickers before adding them to everything, including new button
     $('.loaded-city-button').off();
     $('.loaded-city-button').on('click', preAPI);
 
 }
 
+//loads from local storage all previous cities
 function loadSavedCities () {
     savedCities = [];
-    savedCities = JSON.parse(localStorage.getItem('localHistory'));
-    
+    savedCities = JSON.parse(localStorage.getItem('localHistory'));    
     //skip if null
     if (savedCities != null) {
         savedCities.forEach(function(city) {
@@ -200,14 +197,12 @@ function preAPI() {
             method: "GET",            
             success: function(){
                 $('#search-error').hide();
-                newCitySubmit();
-                
+                newCitySubmit();                
             },
             error: function(){
                 $('#search-error').show();
             }
-       }).then(function(response){           
-            console.log(response);
+       }).then(function(response){       
             
             //City Weather Information Inserted into Elements Here      
             $("#query-city-name").text(response.name + " Weather Report");
