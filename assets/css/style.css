@@ -94,6 +94,14 @@ article {
     margin:5px;
     color: #ffffff;
     opacity: 90%;
+    position: relative;
+}
+
+#main-icon {
+    position: absolute;
+    left: 20%;
+    top: 20px;
+    width: 213px;
 }
 
 .weather-header {    

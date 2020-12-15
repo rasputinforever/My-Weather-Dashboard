@@ -134,7 +134,7 @@ function preAPI() {
                 $('#search-error').show();
                 errCheck = true;
             }
-       }).then(function(response){       
+       }).then(function(response){    
            // if error, just stop here. errors still do this with this AJAX call format
             if (!errCheck) {
             $('#city-data').empty();
@@ -160,6 +160,7 @@ function preAPI() {
                     </li>
                 </ul>
             </div>
+            <img id="main-icon" src="https://openweathermap.org/img/wn/${response.weather[0].icon}.png">
             `);
             $('#city-data').show();
         
