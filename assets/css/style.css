@@ -51,7 +51,9 @@ aside {
     opacity: 80%;    
     background-color: #0f1ebc;
     text-align: center; 
-    border-radius: 25px;     
+    border-radius: 25px;  
+    margin-top: 5px;  
+    margin-bottom: 5px;  
 }
 
 #city-name {    
@@ -87,6 +89,7 @@ article {
     color: #ffffff;
     opacity: 80%;
     position: relative;
+    margin-bottom: 5px; 
 }
 
 #main-icon {
@@ -132,6 +135,7 @@ article {
 
 section {
     margin-left: 5px;
+    margin-top: 5px;
 }
 
 /*specific responsive css*/
