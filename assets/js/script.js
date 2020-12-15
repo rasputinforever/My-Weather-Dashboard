@@ -86,6 +86,8 @@ function newCitySubmit () {
     duplicateCheck = false;
     var citiesToSave = [];
 
+    
+    
     //creates array of all city buttons
     $('.loaded-city-button').each(function(){        
         citiesToSave.push($(this).text());        
@@ -94,11 +96,14 @@ function newCitySubmit () {
             duplicateCheck = true;
         }
     });
-
+    console.log(citiesToSave);
     //prevent duplicate buttons!
     if (!duplicateCheck) {            
         $('#city-buttons').append(`<button class="button-xlarge button-secondary pure-button loaded-city-button">${newCityName}</button>`)
+        citiesToSave.push(newCityName);
     }
+
+    
     localStorage.setItem('localHistory', JSON.stringify(citiesToSave))
 
     //remove all event clickers before adding them to everything, including new button
@@ -189,10 +194,8 @@ function preAPI() {
             $("#current-temp").text("Current Tempurature: " + response.main.temp + "  \u00B0F");        
             $("#feels-like").text("Feels Like: " + response.main.feels_like + "  \u00B0F");
             $("#humidity").text("Humidity: " + response.main.humidity + "%");        
-                //wind direction conversion
-                const windArr = [{label: "North",degree: 0},{label: "North-East",degree: 45},{label: "East",degree: 90},{label: "South-East",degree: 135},{label: "Sout",degree: 180},{label: "South-West",degree: 225},{label: "West",degree: 270},{label: "North-West",degree: 315},{label: "North",degree: 360},{label: "North-East",degree: 405}];
-                let windDir = (windArr[(Math.round((response.wind.deg / 360) * 10))].label)
-            $("#wind-speed").text("Wind Speed: " + response.wind.speed + " mph " + windDir + ", " + response.wind.deg + "\u00B0");        
+
+            $("#wind-speed").text("Wind Speed: " + response.wind.speed + " mph, " + response.wind.deg + "\u00B0");        
             $("#clouds").text("Cloud Coverage: " + response.clouds.all + "%");
         
             //queries based on long/lat go here!
