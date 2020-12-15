@@ -26,6 +26,13 @@ header {
     height: 50px;
     padding-top: 10px;
     opacity: 90%;
+    position: relative;
+}
+
+.clear-history{
+    position: absolute;
+    right: 10px;
+    top: 10px;
 }
 
 main {

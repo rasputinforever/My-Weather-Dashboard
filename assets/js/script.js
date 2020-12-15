@@ -22,40 +22,46 @@ const uviIndex = [
     }
 ];
 
+initialLoad();
+
 // Begin Load Page //
+function initialLoad() {
+    $('body').empty();
+    //main grid structure established here: Header, Main, Button Area, City Info Area, Five-Day-Forecast Area
+    $('body').append(`
+    <header></header>
+    <main class="pure-g">
+    <aside id="city-buttons" class="pure-u-1-5"></aside>
+    <section class="pure-u-3-5">
+        <article id="city-data"></article>
+        <article id="five-day"></article>
+    </section>
+    </main>
+    `)
 
-//main grid structure established here: Header, Main, Button Area, City Info Area, Five-Day-Forecast Area
-$('body').append(`
-<header></header>
-<main class="pure-g">
-<aside id="city-buttons" class="pure-u-1-5"></aside>
-<section class="pure-u-3-5">
-    <article id="city-data"></article>
-    <article id="five-day"></article>
-</section>
-</main>
-`)
+    //header
+    $('header').attr('class', 'pure-menu pure-menu-horizontal')
+    $('header').append(`<nav class="weather-header">My Weather Dashboard</nav>`)
+    $('header').append(`<button class="clear-history pure-button pure-button-primary">Clear History</button>`)
+    $('.clear-history').on('click', deleteHistory);
 
-//header
-$('header').attr('class', 'pure-menu pure-menu-horizontal')
-$('header').append(`<nav class="weather-header">My Weather Dashboard</nav>`)
+    // left aside for city searches and search history
+    $('#city-buttons').append(`
+    <p class="weather-header">City Search...</p>
+    <input id="city-name" placeholder="City, State / Zip Code"/>
+    <button id="new-city-button" class="pure-button pure-button-primary">Search</button>
+    `)
+    //this error will be shown if there's an error during API load
+    $('#city-buttons').append(`<p id="search-error">City Not Found! Try Again!</p>`)
+    $('#search-error').hide();
+    //search submit button onclick calls API
+    $('#new-city-button').on('click', preAPI);
+    //load local storage cities when page loads
+    loadSavedCities();
 
-// left aside for city searches and search history
-$('#city-buttons').append(`
-<p class="weather-header">City Search...</p>
-<input id="city-name" placeholder="City, State / Zip Code"/>
-<button id="new-city-button" class="pure-button pure-button-primary">Search</button>
-`)
-//this error will be shown if there's an error during API load
-$('#city-buttons').append(`<p id="search-error">City Not Found! Try Again!</p>`)
-$('#search-error').hide();
-//search submit button onclick calls API
-$('#new-city-button').on('click', preAPI);
-//load local storage cities when page loads
-loadSavedCities();
-
-//hide the weather boxes until we do a search
-$('#city-data').show();
+    //hide the weather boxes until we do a search
+    $('#city-data').show();
+}
 
 //New City Button Function: called when searching a city, will account for duplicates
 function newCitySubmit () {
@@ -99,7 +105,11 @@ function loadSavedCities () {
 }
 
 //function that deletes a city from history
-
+function deleteHistory() {
+    var citiesToSave = []; 
+    localStorage.setItem('favoriteLocations', JSON.stringify(citiesToSave))
+    initialLoad();
+}
 
 //uppercase function
 function capFirst(string) {    
