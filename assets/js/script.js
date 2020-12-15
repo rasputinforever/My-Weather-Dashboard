@@ -229,7 +229,7 @@ function preAPI() {
                 //create each day-card => with general info about them and icons
                 for (i = 0; i < 5; i++) {   
                     $('#days-list').append(`
-                    <div class="pure-u-1-5 day-forecast"><ul class="pure-menu-list">
+                    <div class=" pure-u-lg-1-5 pure-u-1 day-forecast"><ul class="pure-menu-list">
                         <li class="pure-menu-item">
                             <img src="https://openweathermap.org/img/wn/${forecast.daily[i].weather[0].icon}.png">
                         </li>
