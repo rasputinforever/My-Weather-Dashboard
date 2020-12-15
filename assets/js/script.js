@@ -188,7 +188,7 @@ function preAPI() {
             }
        }).then(function(response){       
             if (!errCheck) {
-                
+            console.log(response.weather[0].description);
             //City Weather Information Inserted into Elements Here      
             $("#query-city-name").text(response.name + " Weather Report");
             $("#current-temp").text("Current Tempurature: " + response.main.temp + "  \u00B0F");        
@@ -197,11 +197,11 @@ function preAPI() {
                 //wind direction conversion
                 const windArr = [{label: "North",degree: 0},{label: "North-East",degree: 45},{label: "East",degree: 90},{label: "South-East",degree: 135},{label: "Sout",degree: 180},{label: "South-West",degree: 225},{label: "West",degree: 270},{label: "North-West",degree: 315},{label: "North",degree: 360}];    
                 let windDir = (windArr[-1 + (Math.round((response.wind.deg / 360) * 10))].label)
-            $("#wind-speed").text("Wind Speed: " + response.wind.speed + " mph " + windDir + ", " + response.wind.deg + " degrees");        
+            $("#wind-speed").text("Wind Speed: " + response.wind.speed + " mph " + windDir + ", " + response.wind.deg + "\u00B0");        
             $("#clouds").text("Cloud Coverage: " + response.clouds.all + "%");
         
             //queries based on long/lat go here!
-
+            
             fiveDayURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${response.coord.lat}&lon=${response.coord.lon}&units=imperial&exclude=hourly,minutely&appid=3f2c8c7cb5bd8bc4f513f0917931a35c`
             $.ajax({
             url: fiveDayURL,
@@ -216,20 +216,32 @@ function preAPI() {
                         <img src="http://openweathermap.org/img/wn/${forecast.daily[i].weather[0].icon}.png">
                     </li>
                     <li class="pure-menu-item">
-                        <p>${forecast.daily[i].temp.day}</p>
+                        <p>Tempurature: ${forecast.daily[i].temp.day} \u00B0F</p>
                     </li>
                     <li class="pure-menu-item">
-                        <p>${forecast.daily[i].temp.night}</p>
+                        <p>Night Temp: ${forecast.daily[i].temp.night} \u00B0F</p>
                     </li>
                     <li class="pure-menu-item">
                         <p>${forecast.daily[i].weather[0].description}</p>
                     </li>
                     <li class="pure-menu-item">
-                        <p>${forecast.daily[i].clouds}</p>
+                        <p>Clouds: ${forecast.daily[i].clouds}%</p>
                     </li>
                     </ul></div>`);
                 }
             });
+
+            //background image query?
+            bgImageUrl = `https://pixabay.com/api/?key=19527879-11b24e10aa7a260d8c2bad18b&q=${response.weather[0].description}&image_type=photo`
+            $.ajax({
+            url: bgImageUrl,
+            method: "GET"
+            }).then(function(bgImageRSP) {
+            
+                $('body').css('background-image', "url(" + bgImageRSP.hits[0].largeImageURL + ")")
+
+            });
+
             }
        });       
     }

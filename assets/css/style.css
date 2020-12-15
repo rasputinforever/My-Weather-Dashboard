@@ -32,8 +32,25 @@
 .button-xlarge {
     width: 90%;
 }
+/* End of Pure CSS */
+
+body {
+    background-color: #D8E0BB;
+    margin: auto;
+}
+
+aside {
+    
+    
+    background-color: #7268A6;
+    padding:5px;
+    margin:5px;
+    text-align: center; 
+       
+}
 
 #city-name {
+    
     height: 50px;
 }
 
@@ -49,19 +66,20 @@
 .loaded-city-button {
 }
 
-aside {
-    background-color: green;
-    padding:5px;
-    margin:5px;
-    text-align: center;    
-}
-
 
 
 article {
-    background-color: green;    
-    
+    background-color: #7268A6;    
+    border-radius: 15px;
     margin:5px;
+    color: #D8E0BB;
+    opacity: 90%;
+}
+
+#query-city-name {    
+    font-size: 25px;
+    
+    color: #D8E0BB;
 }
 
 #city-data {
@@ -70,10 +88,16 @@ article {
 
 #five-day {
     padding:5px;
-
 }
 
 #five-day ul {
-    background-color: blue;
+    background-color: #6B3074;
     margin: 5px;
+    border-radius: 25px;
+    text-align: center;  
+    border-style: outset;
+    border-width: 2px;
+    border-color: black;
+    font-style: italic;
+    opacity: 100%;
 }
