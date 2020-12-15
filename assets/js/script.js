@@ -53,11 +53,11 @@ $('body').append(`
 
 //header
 $('header').attr('class', 'pure-menu pure-menu-horizontal')
-$('header').append(`<nav class="pure-menu-heading pure-menu-link">My Weather Dashboard</nav>`)
+$('header').append(`<nav class="weather-header">My Weather Dashboard</nav>`)
 
 // left section needs "search city" area and all previously loaded cities as buttons
 $('#city-buttons').append(`
-<p>City Manager</p>
+<p class="weather-header">City Search...</p>
 <input id="city-name" placeholder="City, State OR Zip Code"/>
 <button id="new-city-button" class="pure-button pure-button-primary">Search</button>
 `)
@@ -74,7 +74,7 @@ loadSavedCities();
 //selected city detail layout, pick five details to go here
 $('#city-data').append(`
 <div class="pure-menu custom-restricted-width">
-    <span id="query-city-name" class="pure-menu-heading"></span>
+    <span id="query-city-name" class="weather-header pure-menu-heading"></span>
     <ul class="pure-menu-list">
         <li class="pure-menu-item">
             <p id="current-temp"></p>
@@ -91,18 +91,13 @@ $('#city-data').append(`
         <li class="pure-menu-item">
             <p id="clouds"></p>
         </li>
-        <li class="pure-menu-heading">UV Index:</li>
+        <li class="weather-header pure-menu-heading">UV Index:</li>
     </ul>
 </div>
 `)
 
 
-// sub section, for 5-day forecast
-$('#five-day').append(`
-<p>Five-Day Forecast</p>
-<div id="days-list" class="pure-g">
-</div>
-`)
+
 
 
 
@@ -188,15 +183,16 @@ function preAPI() {
             }
        }).then(function(response){       
             if (!errCheck) {
-            console.log(response.weather[0].description);
+            
             //City Weather Information Inserted into Elements Here      
             $("#query-city-name").text(response.name + " Weather Report");
             $("#current-temp").text("Current Tempurature: " + response.main.temp + "  \u00B0F");        
             $("#feels-like").text("Feels Like: " + response.main.feels_like + "  \u00B0F");
             $("#humidity").text("Humidity: " + response.main.humidity + "%");        
                 //wind direction conversion
-                const windArr = [{label: "North",degree: 0},{label: "North-East",degree: 45},{label: "East",degree: 90},{label: "South-East",degree: 135},{label: "Sout",degree: 180},{label: "South-West",degree: 225},{label: "West",degree: 270},{label: "North-West",degree: 315},{label: "North",degree: 360}];    
-                let windDir = (windArr[-1 + (Math.round((response.wind.deg / 360) * 10))].label)
+                const windArr = [{label: "North",degree: 0},{label: "North-East",degree: 45},{label: "East",degree: 90},{label: "South-East",degree: 135},{label: "Sout",degree: 180},{label: "South-West",degree: 225},{label: "West",degree: 270},{label: "North-West",degree: 315},{label: "North",degree: 360},{label: "North-East",degree: 405}];    
+                console.log((Math.round((response.wind.deg / 360) * 10)));
+                let windDir = (windArr[(Math.round((response.wind.deg / 360) * 10))].label)
             $("#wind-speed").text("Wind Speed: " + response.wind.speed + " mph " + windDir + ", " + response.wind.deg + "\u00B0");        
             $("#clouds").text("Cloud Coverage: " + response.clouds.all + "%");
         
@@ -207,8 +203,15 @@ function preAPI() {
             url: fiveDayURL,
             method: "GET"
             }).then(function(forecast) {
-                    
-                $('#days-list').empty();
+                // sub section, for 5-day forecast
+                $('#five-day').empty();
+
+                $('#five-day').append(`
+                <p class="weather-header">Five-Day Forecast</p>
+                <div id="days-list" class="pure-g">
+                </div>
+                `)
+                
                 //create each day-card => with general info about them and icons
                 for (i = 0; i < 5; i++) {   
                     $('#days-list').append(`<div class="pure-u-1-5 day-forecast"><ul class="pure-menu-list">

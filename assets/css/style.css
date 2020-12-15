@@ -35,14 +35,26 @@
 /* End of Pure CSS */
 
 body {
-    background-color: #D8E0BB;
+    background-color: #2638c4;
+    background-size: 2000px;
+}
+
+header {
+    background-color: black;
+    color: white;
+    padding-left: 5%;
+}
+
+main {
     margin: auto;
+    padding: 5%;
 }
 
 aside {
     
+    opacity: 90%;
     
-    background-color: #7268A6;
+    background-color: #0f1ebc;
     padding:5px;
     margin:5px;
     text-align: center; 
@@ -56,6 +68,20 @@ aside {
 
 #new-city-button {
     width: 90%;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+#search-error {
+    font-weight: bolder;
+    font-size: 24px;
+    color: #fccf00;
+}
+
+#query-city-name {
+    font-weight: bolder;
+    font-size: 24px;
+    color: #ffffff;
 }
 
 #city-name {
@@ -63,23 +89,18 @@ aside {
     font-size: 80%;
 }
 
-.loaded-city-button {
-}
-
-
-
 article {
-    background-color: #7268A6;    
+    background-color: #0f1ebc;    
     border-radius: 15px;
     margin:5px;
-    color: #D8E0BB;
+    color: #ffffff;
     opacity: 90%;
 }
 
-#query-city-name {    
-    font-size: 25px;
-    
-    color: #D8E0BB;
+.weather-header {    
+    font-weight: bolder;
+    font-size: 24px;
+    color: #ffffff;
 }
 
 #city-data {
@@ -91,7 +112,7 @@ article {
 }
 
 #five-day ul {
-    background-color: #6B3074;
+    background-color: #0a145a;
     margin: 5px;
     border-radius: 25px;
     text-align: center;  
