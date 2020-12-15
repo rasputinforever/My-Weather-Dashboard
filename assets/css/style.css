@@ -51,21 +51,17 @@ main {
     margin-top: 1%;
 }
 
-aside {
-    
-    opacity: 90%;
-    
+aside {    
+    opacity: 90%;    
     background-color: #0f1ebc;
     padding:5px;
     margin:5px;
     text-align: center; 
     border-top-left-radius: 25px;
-    border-bottom-left-radius: 25px;
-       
+    border-bottom-left-radius: 25px;      
 }
 
-#city-name {
-    
+#city-name {    
     height: 50px;
 }
 
@@ -107,11 +103,11 @@ article {
 }
 
 #city-data {
-    padding:5px;
+    padding: 5px;
 }
 
 #five-day {
-    padding:5px;
+    padding: 5px;
 }
 
 #five-day ul {

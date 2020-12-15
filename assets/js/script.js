@@ -100,7 +100,6 @@ function loadSavedCities () {
 
 //function that deletes a city from history
 
-
 //API Function: ALL APIs called, one at a time, but hinge on the "base" API being successful. IF it fails, error-handler will prevent the remaining actions. This does not prevent subsequent errors occuring, but, prevents a good chunk of possible problems, especially mis-spelled city names or the like.
 function preAPI() {
     let cityName = '';
@@ -164,22 +163,15 @@ function preAPI() {
             `);
             $('#city-data').show();
         
-            //queries based on long/lat go here!
-            
+            //queries based on long/lat go here!            
             fiveDayURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${response.coord.lat}&lon=${response.coord.lon}&units=imperial&exclude=hourly,minutely&appid=3f2c8c7cb5bd8bc4f513f0917931a35c`
             $.ajax({
             url: fiveDayURL,
             method: "GET"
             }).then(function(forecast) {
                 // sub section, for 5-day forecast
-                $('#city-data').append(`
-                    <div class="pure-menu custom-restricted-width">
-                        <ul class="pure-menu-list">
-                            <li class="weather-header pure-menu-heading">UV Index: <span id="uv-index"></span></li>
-                        </ul>
-                    </div>
-                `);
-                              
+
+                //get practical label for UVI result
                 let uviLabel = uviIndex[0].label;
                 uviIndex.forEach(function(uvi){
                     if (forecast.current.uvi > uvi.index) {
@@ -187,16 +179,20 @@ function preAPI() {
                     }
                 })
 
-                $('#uv-index').append(forecast.current.uvi + ", Risk Index: " + uviLabel)
+                //UVI report
+                $('#city-data').append(`
+                    <div class="pure-menu custom-restricted-width">
+                        <ul class="pure-menu-list">
+                            <li class="weather-header pure-menu-heading">UV Index: <span class="uv-index">${forecast.current.uvi}, Risk Index: ${uviLabel}</span></li>
+                        </ul>
+                    </div>
+                `);
 
-                
-
+                //five day forecast
                 $('#five-day').empty();
-
                 $('#five-day').append(`
-                <p class="weather-header">Five-Day Forecast</p>
-                <div id="days-list" class="pure-g">
-                </div>
+                    <p class="weather-header">Five-Day Forecast</p>
+                    <div id="days-list" class="pure-g"></div>
                 `)
                 
                 //create each day-card => with general info about them and icons
@@ -221,15 +217,13 @@ function preAPI() {
                 }
             });
 
-            //background image query?
+            //Background image query? Background image query!
             bgImageUrl = `https://pixabay.com/api/?key=19527879-11b24e10aa7a260d8c2bad18b&q=${response.weather[0].description}&image_type=photo`
             $.ajax({
             url: bgImageUrl,
             method: "GET"
-            }).then(function(bgImageRSP) {
-            
+            }).then(function(bgImageRSP) {            
                 $('body').css('background-image', "url(" + bgImageRSP.hits[0].largeImageURL + ")")
-
             });
 
             }
