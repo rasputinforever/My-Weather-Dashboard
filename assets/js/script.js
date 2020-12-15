@@ -154,7 +154,6 @@ function preAPI() {
        }).then(function(response){    
            // if error, just stop here. errors still do this with this AJAX call format
             if (!errCheck) {
-                console.log(response);
             $('#city-data').empty();
             //the main body of information with pure css classes.
             $('#city-data').append(`
