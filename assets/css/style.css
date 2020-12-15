@@ -19,6 +19,11 @@ body {
     background-size: 2000px;
 }
 
+.pure-g {
+    margin-top: 0px;
+}
+
+
 .dashboard-header {
     background-color: black;
     color: white;
