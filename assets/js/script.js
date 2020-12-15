@@ -100,6 +100,13 @@ function loadSavedCities () {
 
 //function that deletes a city from history
 
+
+//uppercase function
+function capFirst(string) {    
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+
 //API Function: ALL APIs called, one at a time, but hinge on the "base" API being successful. IF it fails, error-handler will prevent the remaining actions. This does not prevent subsequent errors occuring, but, prevents a good chunk of possible problems, especially mis-spelled city names or the like.
 function preAPI() {
     let cityName = '';
@@ -137,6 +144,7 @@ function preAPI() {
        }).then(function(response){    
            // if error, just stop here. errors still do this with this AJAX call format
             if (!errCheck) {
+                console.log(response);
             $('#city-data').empty();
             //the main body of information with pure css classes.
             $('#city-data').append(`
@@ -144,11 +152,14 @@ function preAPI() {
                 <span id="query-city-name" class="weather-header pure-menu-heading">${response.name} Weather Report</span>
                 <ul class="pure-menu-list">
                     <li class="pure-menu-item">
+                        <p>${capFirst(response.weather[0].description)}</p>
+                    </li>
+                    <li class="pure-menu-item">
                         <p>Current Tempurature: ${response.main.temp}\u00B0 F</p>
                     </li>
                     <li class="pure-menu-item">
                         <p>Feels Like: ${response.main.feels_like}\u00B0 F</p>
-                    </li>
+                    </li>                    
                     <li class="pure-menu-item">
                         <p>Humidity: ${response.main.humidity}%</p>
                     </li>
@@ -156,7 +167,7 @@ function preAPI() {
                         <p>Wind Speed: ${response.wind.speed} mph, ${response.wind.deg}\u00B0</p>
                     </li>
                     <li class="pure-menu-item">
-                        <p>Cloud Coverage: ${response.clouds.all}} %</p>
+                        <p>Cloud Coverage: ${response.clouds.all} %</p>
                     </li>
                 </ul>
             </div>
@@ -170,7 +181,6 @@ function preAPI() {
             url: fiveDayURL,
             method: "GET"
             }).then(function(forecast) {
-                // sub section, for 5-day forecast
 
                 //get practical label for UVI result
                 let uviLabel = uviIndex[0].label;
@@ -198,23 +208,25 @@ function preAPI() {
                 
                 //create each day-card => with general info about them and icons
                 for (i = 0; i < 5; i++) {   
-                    $('#days-list').append(`<div class="pure-u-1-5 day-forecast"><ul class="pure-menu-list">
-                    <li class="pure-menu-item">
-                        <img src="https://openweathermap.org/img/wn/${forecast.daily[i].weather[0].icon}.png">
-                    </li>
-                    <li class="pure-menu-item">
-                        <p>Tempurature: ${forecast.daily[i].temp.day} \u00B0F</p>
-                    </li>
-                    <li class="pure-menu-item">
-                        <p>Night Temp: ${forecast.daily[i].temp.night} \u00B0F</p>
-                    </li>
-                    <li class="pure-menu-item">
-                        <p>${forecast.daily[i].weather[0].description}</p>
-                    </li>
-                    <li class="pure-menu-item">
-                        <p>Clouds: ${forecast.daily[i].clouds}%</p>
-                    </li>
-                    </ul></div>`);
+                    $('#days-list').append(`
+                    <div class="pure-u-1-5 day-forecast"><ul class="pure-menu-list">
+                        <li class="pure-menu-item">
+                            <img src="https://openweathermap.org/img/wn/${forecast.daily[i].weather[0].icon}.png">
+                        </li>
+                        <li class="pure-menu-item">
+                            <p>Tempurature: ${forecast.daily[i].temp.day} \u00B0F</p>
+                        </li>
+                        <li class="pure-menu-item">
+                            <p>Night Temp: ${forecast.daily[i].temp.night} \u00B0F</p>
+                        </li>
+                        <li class="pure-menu-item">
+                            <p>${capFirst(forecast.daily[i].weather[0].description)}</p>
+                        </li>
+                        <li class="pure-menu-item">
+                            <p>Clouds: ${forecast.daily[i].clouds}%</p>
+                        </li>
+                    </ul></div>
+                    `);
                 }
             });
 
@@ -223,8 +235,8 @@ function preAPI() {
             $.ajax({
             url: bgImageUrl,
             method: "GET"
-            }).then(function(bgImageRSP) {            
-                $('body').css('background-image', "url(" + bgImageRSP.hits[0].largeImageURL + ")")
+            }).then(function(bgImageRSP) {        
+                $('body').css('background-image', "url(" + bgImageRSP.hits[Math.round(Math.random()*10)].largeImageURL + ")");
             });
 
             }

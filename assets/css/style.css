@@ -1,39 +1,19 @@
-.button-success,
-.button-error,
-.button-warning,
 .button-secondary {
     color: white;
     border-radius: 4px;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
 }
 
-.button-success {
-    background: rgb(28, 184, 65);
-    /* this is a green */
-}
-
-.button-error {
-    background: rgb(202, 60, 60);
-    /* this is a maroon */
-}
-
-.button-warning {
-    background: rgb(223, 117, 20);
-    /* this is an orange */
-}
-
 .button-secondary {
     background: rgb(66, 184, 221);
-    
     margin: 5px;
-    /* this is a light blue */
 }
 
 .button-xlarge {
     width: 90%;
 }
-/* End of Pure CSS */
 
+/* End of Pure CSS */
 body {
     background-color: #2638c4;
     background-size: 2000px;
@@ -43,6 +23,9 @@ header {
     background-color: black;
     color: white;
     padding-left: 5%;
+    height: 50px;
+    padding-top: 10px;
+    opacity: 90%;
 }
 
 main {
