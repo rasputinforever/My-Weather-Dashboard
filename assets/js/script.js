@@ -1,3 +1,14 @@
+//todos
+    //re-add the object/math to get a wind-directoinal phrase conversion from degrees (use the bg image as a template)
+    //move the big icon over OR make it more transparent
+
+//ambitious
+    //get media triggers going, at the very leat get it working for mobile
+    //includes bg image, check out pure css
+
+//beyond ambitious
+    //time-clock API to get a night/day tag for bg
+
 // variables used later //
 const uviIndex = [
     {
@@ -31,10 +42,10 @@ function initialLoad() {
     $('body').append(`
     <header></header>
     <main class="pure-g">
-    <aside id="city-buttons" class="pure-u-1-5"></aside>
-    <section class="pure-u-3-5">
-        <article id="city-data"></article>
-        <article id="five-day"></article>
+    <aside id="city-buttons" class="pure-u-md-1-5"></aside>
+    <section class="pure-u-md-3-5">
+        <article id="city-data" class="pure-u-md-1"></article>
+        <article id="five-day" class="pure-u-md-1"></article>
     </section>
     </main>
     `)
@@ -47,12 +58,12 @@ function initialLoad() {
 
     // left aside for city searches and search history
     $('#city-buttons').append(`
-    <p class="weather-header">City Search...</p>
+    <div class="pure-u-1"><p class="weather-header">City Search...</p></div>
     <input id="city-name" placeholder="City, State / Zip Code"/>
     <button id="new-city-button" class="pure-button pure-button-primary">Search</button>
     `)
     //this error will be shown if there's an error during API load
-    $('#city-buttons').append(`<p id="search-error">City Not Found! Try Again!</p>`)
+    $('#city-buttons').append(`<div class="pure-u-1"><p id="search-error">City Not Found! Try Again!</p><div class="pure-u-1">`)
     $('#search-error').hide();
     //search submit button onclick calls API
     $('#new-city-button').on('click', preAPI);
@@ -157,6 +168,7 @@ function preAPI() {
             $('#city-data').empty();
             //the main body of information with pure css classes.
             $('#city-data').append(`
+            <div class="pure-u-1">
             <div class="pure-menu custom-restricted-width">
                 <span id="query-city-name" class="weather-header pure-menu-heading">${response.name} Weather Report</span>
                 <ul class="pure-menu-list">
@@ -180,6 +192,7 @@ function preAPI() {
                     </li>
                 </ul>
             </div>
+            </div>
             <img id="main-icon" src="https://openweathermap.org/img/wn/${response.weather[0].icon}.png">
             `);
             $('#city-data').show();
@@ -201,37 +214,37 @@ function preAPI() {
 
                 //UVI report
                 $('#city-data').append(`
-                    <div class="pure-menu custom-restricted-width">
+                <div class="pure-u-1"><div class="pure-menu custom-restricted-width">
                         <ul class="pure-menu-list">
                             <li class="weather-header pure-menu-heading">UV Index: <span class="uv-index">${forecast.current.uvi}, Risk Index: ${uviLabel}</span></li>
                         </ul>
-                    </div>
+                    </div></div>
                 `);
 
                 //five day forecast
                 $('#five-day').empty();
-                $('#five-day').append(`
+                $('#five-day').append(`<div class="pure-u-1">
                     <p class="weather-header">Five-Day Forecast</p>
-                    <div id="days-list" class="pure-g"></div>
+                    <div id="days-list" class="pure-g"></div></div>
                 `)
                 
                 //create each day-card => with general info about them and icons
                 for (i = 0; i < 5; i++) {   
                     $('#days-list').append(`
                     <div class="pure-u-1-5 day-forecast"><ul class="pure-menu-list">
-                        <li class="pure-menu-item">
+                        <li class="pure-menu-item pure-u-sm-1">
                             <img src="https://openweathermap.org/img/wn/${forecast.daily[i].weather[0].icon}.png">
                         </li>
-                        <li class="pure-menu-item">
+                        <li class="pure-menu-item pure-u-sm-1">
                             <p>Tempurature: ${forecast.daily[i].temp.day} \u00B0F</p>
                         </li>
-                        <li class="pure-menu-item">
+                        <li class="pure-menu-item pure-u-sm-1">
                             <p>Night Temp: ${forecast.daily[i].temp.night} \u00B0F</p>
                         </li>
-                        <li class="pure-menu-item">
+                        <li class="pure-menu-item pure-u-sm-1">
                             <p>${capFirst(forecast.daily[i].weather[0].description)}</p>
                         </li>
-                        <li class="pure-menu-item">
+                        <li class="pure-menu-item pure-u-sm-1">
                             <p>Clouds: ${forecast.daily[i].clouds}%</p>
                         </li>
                     </ul></div>
