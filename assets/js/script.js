@@ -71,30 +71,7 @@ $('#new-city-button').on('click', preAPI);
 //city buttons will be appended here ON LOAD
 loadSavedCities();
 
-//selected city detail layout, pick five details to go here
-$('#city-data').append(`
-<div class="pure-menu custom-restricted-width">
-    <span id="query-city-name" class="weather-header pure-menu-heading"></span>
-    <ul class="pure-menu-list">
-        <li class="pure-menu-item">
-            <p id="current-temp"></p>
-        </li>
-        <li class="pure-menu-item">
-            <p id="feels-like"></p>
-        </li>
-        <li class="pure-menu-item">
-            <p id="humidity"></p>
-        </li>
-        <li class="pure-menu-item">
-            <p id="wind-speed"></p>
-        </li>
-        <li class="pure-menu-item">
-            <p id="clouds"></p>
-        </li>
-        <li class="weather-header pure-menu-heading">UV Index:</li>
-    </ul>
-</div>
-`)
+
 
 
 
@@ -183,15 +160,37 @@ function preAPI() {
             }
        }).then(function(response){       
             if (!errCheck) {
-            
+            $('#city-data').empty();
+            $('#city-data').append(`
+            <div class="pure-menu custom-restricted-width">
+                <span id="query-city-name" class="weather-header pure-menu-heading"></span>
+                <ul class="pure-menu-list">
+                    <li class="pure-menu-item">
+                        <p id="current-temp"></p>
+                    </li>
+                    <li class="pure-menu-item">
+                        <p id="feels-like"></p>
+                    </li>
+                    <li class="pure-menu-item">
+                        <p id="humidity"></p>
+                    </li>
+                    <li class="pure-menu-item">
+                        <p id="wind-speed"></p>
+                    </li>
+                    <li class="pure-menu-item">
+                        <p id="clouds"></p>
+                    </li>
+                </ul>
+            </div>
+            `);
+
             //City Weather Information Inserted into Elements Here      
             $("#query-city-name").text(response.name + " Weather Report");
             $("#current-temp").text("Current Tempurature: " + response.main.temp + "  \u00B0F");        
             $("#feels-like").text("Feels Like: " + response.main.feels_like + "  \u00B0F");
             $("#humidity").text("Humidity: " + response.main.humidity + "%");        
                 //wind direction conversion
-                const windArr = [{label: "North",degree: 0},{label: "North-East",degree: 45},{label: "East",degree: 90},{label: "South-East",degree: 135},{label: "Sout",degree: 180},{label: "South-West",degree: 225},{label: "West",degree: 270},{label: "North-West",degree: 315},{label: "North",degree: 360},{label: "North-East",degree: 405}];    
-                console.log((Math.round((response.wind.deg / 360) * 10)));
+                const windArr = [{label: "North",degree: 0},{label: "North-East",degree: 45},{label: "East",degree: 90},{label: "South-East",degree: 135},{label: "Sout",degree: 180},{label: "South-West",degree: 225},{label: "West",degree: 270},{label: "North-West",degree: 315},{label: "North",degree: 360},{label: "North-East",degree: 405}];
                 let windDir = (windArr[(Math.round((response.wind.deg / 360) * 10))].label)
             $("#wind-speed").text("Wind Speed: " + response.wind.speed + " mph " + windDir + ", " + response.wind.deg + "\u00B0");        
             $("#clouds").text("Cloud Coverage: " + response.clouds.all + "%");
@@ -204,6 +203,47 @@ function preAPI() {
             method: "GET"
             }).then(function(forecast) {
                 // sub section, for 5-day forecast
+                $('#city-data').append(`
+                    <div class="pure-menu custom-restricted-width">
+                        <ul class="pure-menu-list">
+                            <li class="weather-header pure-menu-heading">UV Index: <span id="uv-index"></span></li>
+                        </ul>
+                    </div>
+                `);
+                const uviIndex = [
+                    {
+                        index: 2,
+                        label: 'Low'
+                    },
+                    {
+                        index: 5,
+                        label: 'Moderate'
+                    },
+                    {
+                        index: 7,
+                        label: 'High'
+                    },
+                    {
+                        index: 10,
+                        label: 'Very High'
+                    },
+                    {
+                        index: 11,
+                        label: 'Extreme'
+                    }
+                ];
+               
+                let uviLabel = uviIndex[0].label;
+                uviIndex.forEach(function(uvi){
+                    if (forecast.current.uvi > uvi.index) {
+                        uviLabel = uvi.label
+                    }
+                })
+
+                $('#uv-index').append(forecast.current.uvi + ", Risk Index: " + uviLabel)
+
+                
+
                 $('#five-day').empty();
 
                 $('#five-day').append(`
