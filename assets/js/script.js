@@ -1,6 +1,7 @@
 //todos
     //re-add the object/math to get a wind-directoinal phrase conversion from degrees (use the bg image as a template)
     //move the big icon over OR make it more transparent
+    //risk index not working correctly
 
 //ambitious
     //get media triggers going, at the very leat get it working for mobile
@@ -203,14 +204,14 @@ function preAPI() {
             method: "GET"
             }).then(function(forecast) {
 
-                //get practical label for UVI result
-                let uviLabel = uviIndex[0].label;
+                //get practical label for UVI result                
+                let labelCount = 0;                
                 uviIndex.forEach(function(uvi){
                     if (forecast.current.uvi > uvi.index) {
-                        uviLabel = uvi.label
+                        labelCount++
                     }
                 })
-
+                let uviLabel = uviIndex[labelCount].label;
                 //UVI report
                 $('#city-data').append(`
                 <div class="pure-menu pure-u-1-2 custom-restricted-width">
