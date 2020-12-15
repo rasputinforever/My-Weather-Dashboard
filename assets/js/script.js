@@ -244,9 +244,8 @@ function preAPI() {
             $.ajax({
             url: bgImageUrl,
             method: "GET"
-            }).then(function(bgImageRSP) {      
-                console.log();
-                $('body').css('background-image', "url(" + bgImageRSP.hits[Math.round(bgImageRSP.hits.length * Math.random())].largeImageURL + ")");
+            }).then(function(bgImageRSP) {   
+                $('body').css('background-image', "url(" + bgImageRSP.hits[Math.floor(bgImageRSP.hits.length * Math.random())].largeImageURL + ")");
             });
 
             }
