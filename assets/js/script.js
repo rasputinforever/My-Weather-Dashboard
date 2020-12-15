@@ -40,18 +40,19 @@ function initialLoad() {
     $('body').empty();
     //main grid structure established here: Header, Main, Button Area, City Info Area, Five-Day-Forecast Area
     $('body').append(`
-    <header></header>
+    
     <main class="pure-g">
-    <aside id="city-buttons" class="pure-u-1-5"></aside>
-    <section class="pure-u-3-5">
-        <article id="city-data" class="pure-u-1"></article>
-        <article id="five-day" class="pure-u-1"></article>
+    <header class="pure-u-1"></header>
+    <aside id="city-buttons" class="pure-u-1 pure-u-md-1-5"></aside>
+    <section class="pure-u-1 pure-u-md-3-5">
+        <article id="city-data" class="pure-u-8-9"></article>
+        <article id="five-day" class="pure-u-8-9"></article>
     </section>
     </main>
     `)
 
     //header
-    $('header').attr('class', 'dashboard-header pure-menu pure-menu-horizontal')
+    $('header').attr('class', 'pure-u-1 dashboard-header pure-menu pure-menu-horizontal')
     $('header').append(`<nav class="weather-header">My Weather Dashboard</nav>`)
     $('header').append(`<button class="clear-history pure-button pure-button-primary">Clear History</button>`)
     $('.clear-history').on('click', deleteHistory);
@@ -169,24 +170,24 @@ function preAPI() {
             //the main body of information with pure css classes.
             $('#city-data').append(`
             <div class="pure-menu custom-restricted-width pure-u-1">
-                <span id="query-city-name" class="weather-header pure-menu-heading">${response.name} Weather Report</span>
-                <ul class="pure-menu-list">
+                <span class="weather-header">${response.name} Weather Report</span>
+                <ul class="pure-menu-list pure-u-1">
                     <li class="pure-menu-item">
                         <p>${capFirst(response.weather[0].description)}</p>
                     </li>
-                    <li class="pure-menu-item">
+                    <li class="pure-menu-item pure-u-1">
                         <p>Current Tempurature: ${response.main.temp}\u00B0 F</p>
                     </li>
-                    <li class="pure-menu-item">
+                    <li class="pure-menu-item pure-u-1">
                         <p>Feels Like: ${response.main.feels_like}\u00B0 F</p>
                     </li>                    
-                    <li class="pure-menu-item">
+                    <li class="pure-menu-item pure-u-1">
                         <p>Humidity: ${response.main.humidity}%</p>
                     </li>
-                    <li class="pure-menu-item">
+                    <li class="pure-menu-item pure-u-1">
                         <p>Wind Speed: ${response.wind.speed} mph, ${response.wind.deg}\u00B0</p>
                     </li>
-                    <li class="pure-menu-item">
+                    <li class="pure-menu-item pure-u-1">
                         <p>Cloud Coverage: ${response.clouds.all} %</p>
                     </li>
                 </ul>
@@ -212,11 +213,9 @@ function preAPI() {
 
                 //UVI report
                 $('#city-data').append(`
-                <div class="pure-menu pure-u-1 custom-restricted-width">
-                        <ul class="pure-menu-list">
-                            <li class="weather-header">UV Index: <span class="uv-index">${forecast.current.uvi}, Risk Index: ${uviLabel}</span></li>
-                        </ul>
-                    </div>
+                <div class="pure-menu pure-u-1-2 custom-restricted-width">
+                    <p="weather-header">UV Index: <span class="uv-index">${forecast.current.uvi}, Risk Index: ${uviLabel}</span></p>
+                </div>
                 `);
 
                 //five day forecast
