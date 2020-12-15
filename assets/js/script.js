@@ -42,10 +42,10 @@ function initialLoad() {
     $('body').append(`
     <header></header>
     <main class="pure-g">
-    <aside id="city-buttons" class="pure-u-md-1-5"></aside>
-    <section class="pure-u-md-3-5">
-        <article id="city-data" class="pure-u-md-1"></article>
-        <article id="five-day" class="pure-u-md-1"></article>
+    <aside id="city-buttons" class="pure-u-1-5"></aside>
+    <section class="pure-u-3-5">
+        <article id="city-data" class="pure-u-1"></article>
+        <article id="five-day" class="pure-u-1"></article>
     </section>
     </main>
     `)
@@ -168,8 +168,7 @@ function preAPI() {
             $('#city-data').empty();
             //the main body of information with pure css classes.
             $('#city-data').append(`
-            <div class="pure-u-1">
-            <div class="pure-menu custom-restricted-width">
+            <div class="pure-menu custom-restricted-width pure-u-1">
                 <span id="query-city-name" class="weather-header pure-menu-heading">${response.name} Weather Report</span>
                 <ul class="pure-menu-list">
                     <li class="pure-menu-item">
@@ -192,7 +191,6 @@ function preAPI() {
                     </li>
                 </ul>
             </div>
-            </div>
             <img id="main-icon" src="https://openweathermap.org/img/wn/${response.weather[0].icon}.png">
             `);
             $('#city-data').show();
@@ -214,37 +212,37 @@ function preAPI() {
 
                 //UVI report
                 $('#city-data').append(`
-                <div class="pure-u-1"><div class="pure-menu custom-restricted-width">
+                <div class="pure-menu pure-u-1 custom-restricted-width">
                         <ul class="pure-menu-list">
-                            <li class="weather-header pure-menu-heading">UV Index: <span class="uv-index">${forecast.current.uvi}, Risk Index: ${uviLabel}</span></li>
+                            <li class="weather-header">UV Index: <span class="uv-index">${forecast.current.uvi}, Risk Index: ${uviLabel}</span></li>
                         </ul>
-                    </div></div>
+                    </div>
                 `);
 
                 //five day forecast
                 $('#five-day').empty();
-                $('#five-day').append(`<div class="pure-u-1">
-                    <p class="weather-header">Five-Day Forecast</p>
-                    <div id="days-list" class="pure-g"></div></div>
+                $('#five-day').append(`
+                    <p class="pure-u-1 weather-header">Five-Day Forecast</p>
+                    <div id="days-list" class="pure-g"></div>
                 `)
                 
                 //create each day-card => with general info about them and icons
                 for (i = 0; i < 5; i++) {   
                     $('#days-list').append(`
                     <div class="pure-u-1-5 day-forecast"><ul class="pure-menu-list">
-                        <li class="pure-menu-item pure-u-sm-1">
+                        <li class="pure-menu-item">
                             <img src="https://openweathermap.org/img/wn/${forecast.daily[i].weather[0].icon}.png">
                         </li>
-                        <li class="pure-menu-item pure-u-sm-1">
+                        <li class="pure-menu-item">
                             <p>Tempurature: ${forecast.daily[i].temp.day} \u00B0F</p>
                         </li>
-                        <li class="pure-menu-item pure-u-sm-1">
+                        <li class="pure-menu-item">
                             <p>Night Temp: ${forecast.daily[i].temp.night} \u00B0F</p>
                         </li>
-                        <li class="pure-menu-item pure-u-sm-1">
+                        <li class="pure-menu-item">
                             <p>${capFirst(forecast.daily[i].weather[0].description)}</p>
                         </li>
-                        <li class="pure-menu-item pure-u-sm-1">
+                        <li class="pure-menu-item">
                             <p>Clouds: ${forecast.daily[i].clouds}%</p>
                         </li>
                     </ul></div>
