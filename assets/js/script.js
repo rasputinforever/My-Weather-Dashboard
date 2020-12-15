@@ -40,7 +40,7 @@ function initialLoad() {
     `)
 
     //header
-    $('header').attr('class', 'pure-menu pure-menu-horizontal')
+    $('header').attr('class', 'dashboard-header pure-menu pure-menu-horizontal')
     $('header').append(`<nav class="weather-header">My Weather Dashboard</nav>`)
     $('header').append(`<button class="clear-history pure-button pure-button-primary">Clear History</button>`)
     $('.clear-history').on('click', deleteHistory);
