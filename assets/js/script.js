@@ -1,3 +1,27 @@
+// variables used later //
+const uviIndex = [
+    {
+        index: 2,
+        label: 'Low'
+    },
+    {
+        index: 5,
+        label: 'Moderate'
+    },
+    {
+        index: 7,
+        label: 'High'
+    },
+    {
+        index: 10,
+        label: 'Very High'
+    },
+    {
+        index: 11,
+        label: 'Extreme'
+    }
+];
+
 // Begin Load Page //
 
 //main grid structure established here: Header, Main, Button Area, City Info Area, Five-Day-Forecast Area
@@ -16,33 +40,30 @@ $('body').append(`
 $('header').attr('class', 'pure-menu pure-menu-horizontal')
 $('header').append(`<nav class="weather-header">My Weather Dashboard</nav>`)
 
-// left section needs "search city" area and all previously loaded cities as buttons
+// left aside for city searches and search history
 $('#city-buttons').append(`
 <p class="weather-header">City Search...</p>
 <input id="city-name" placeholder="City, State / Zip Code"/>
 <button id="new-city-button" class="pure-button pure-button-primary">Search</button>
 `)
 //this error will be shown if there's an error during API load
-$('#city-buttons').append(`
-<p id="search-error">City Not Found! Try Again!</p>
-`)
+$('#city-buttons').append(`<p id="search-error">City Not Found! Try Again!</p>`)
 $('#search-error').hide();
-//search city onclick
+//search submit button onclick calls API
 $('#new-city-button').on('click', preAPI);
-//city buttons will be appended here ON LOAD
+//load local storage cities when page loads
 loadSavedCities();
 
-// End Load Page //
+//hide the weather boxes until we do a search
+$('#city-data').show();
 
-//New City Button Function
+//New City Button Function: called when searching a city, will account for duplicates
 function newCitySubmit () {
     newCityName = $('#city-name').val();
     duplicateCheck = false;
-    var citiesToSave = [];
-
+    var citiesToSave = [];    
     
-    
-    //creates array of all city buttons
+    //creates array of all city buttons, pushes each button into the array then simultaneously checks if "active" search city is a duplicate
     $('.loaded-city-button').each(function(){        
         citiesToSave.push($(this).text());        
         //dupe check
@@ -50,23 +71,20 @@ function newCitySubmit () {
             duplicateCheck = true;
         }
     });
-    console.log(citiesToSave);
-    //prevent duplicate buttons!
+    //if it is a duplicate, don't put it into local storage and don't make a new button
     if (!duplicateCheck) {            
         $('#city-buttons').append(`<button class="button-xlarge button-secondary pure-button loaded-city-button">${newCityName}</button>`)
         citiesToSave.push(newCityName);
     }
-
-    
+    //save for next page load    
     localStorage.setItem('favoriteLocations', JSON.stringify(citiesToSave))
 
-    //remove all event clickers before adding them to everything, including new button
+    //remove all event clickers before adding them to everything, including new button. This prevents duplicate onlicks
     $('.loaded-city-button').off();
     $('.loaded-city-button').on('click', preAPI);
-
 }
 
-//loads from local storage all previous cities
+//loads from local storage all previous cities, creates buttons for them
 function loadSavedCities () {
     savedCities = [];
     savedCities = JSON.parse(localStorage.getItem('favoriteLocations'));    
@@ -80,24 +98,21 @@ function loadSavedCities () {
     $('.loaded-city-button').on('click', preAPI);
 }
 
-
-// load city buttons
-    //load local history
-    //kill all buttons class = city button
-    //add each button from load in reverse order
-        //default city = special formatting button
+//function that deletes a city from history
 
 
-//API Function
+//API Function: ALL APIs called, one at a time, but hinge on the "base" API being successful. IF it fails, error-handler will prevent the remaining actions. This does not prevent subsequent errors occuring, but, prevents a good chunk of possible problems, especially mis-spelled city names or the like.
 function preAPI() {
     let cityName = '';
-    //basic city data
+    //this checks if what is clicked was a previous-load button or the "search" button. The city name will be located on the button or in thenearby text box
     if ($(this).attr('class') === 'button-xlarge button-secondary pure-button loaded-city-button') {
         cityName = $(this).text();
     } else {
         cityName = $(this).prev().val();
     };
     let elName = $(this).text();
+
+    //pushing the city name and which element we clicked. ONLY a click from "search" should trigger a new city to be logged into local storage
     queryAPI(cityName, elName);
 
     // detailed city information
@@ -108,49 +123,46 @@ function preAPI() {
             url: queryURL,
             method: "GET",            
             success: function(){
+                //removes the error message if it was shown
                 $('#search-error').hide();
+                //only calls if this was a searched city. If a duplicate is called, it will be handled in that function. NO ERROR buttons!
                 if (elName === 'Search') {
                     newCitySubmit();
                 }
             },
             error: function(){
+                //show the error and flag the "then" function to NOT continue.
                 $('#search-error').show();
                 errCheck = true;
             }
        }).then(function(response){       
+           // if error, just stop here. errors still do this with this AJAX call format
             if (!errCheck) {
             $('#city-data').empty();
+            //the main body of information with pure css classes.
             $('#city-data').append(`
             <div class="pure-menu custom-restricted-width">
-                <span id="query-city-name" class="weather-header pure-menu-heading"></span>
+                <span id="query-city-name" class="weather-header pure-menu-heading">${response.name} Weather Report</span>
                 <ul class="pure-menu-list">
                     <li class="pure-menu-item">
-                        <p id="current-temp"></p>
+                        <p>Current Tempurature: ${response.main.temp}\u00B0 F</p>
                     </li>
                     <li class="pure-menu-item">
-                        <p id="feels-like"></p>
+                        <p>Feels Like: ${response.main.feels_like}\u00B0 F</p>
                     </li>
                     <li class="pure-menu-item">
-                        <p id="humidity"></p>
+                        <p>Humidity: ${response.main.humidity}%</p>
                     </li>
                     <li class="pure-menu-item">
-                        <p id="wind-speed"></p>
+                        <p>Wind Speed: ${response.wind.speed} mph, ${response.wind.deg}\u00B0</p>
                     </li>
                     <li class="pure-menu-item">
-                        <p id="clouds"></p>
+                        <p>Cloud Coverage: ${response.clouds.all}} %</p>
                     </li>
                 </ul>
             </div>
             `);
-
-            //City Weather Information Inserted into Elements Here      
-            $("#query-city-name").text(response.name + " Weather Report");
-            $("#current-temp").text("Current Tempurature: " + response.main.temp + "  \u00B0F");        
-            $("#feels-like").text("Feels Like: " + response.main.feels_like + "  \u00B0F");
-            $("#humidity").text("Humidity: " + response.main.humidity + "%");        
-
-            $("#wind-speed").text("Wind Speed: " + response.wind.speed + " mph, " + response.wind.deg + "\u00B0");        
-            $("#clouds").text("Cloud Coverage: " + response.clouds.all + "%");
+            $('#city-data').show();
         
             //queries based on long/lat go here!
             
@@ -167,29 +179,7 @@ function preAPI() {
                         </ul>
                     </div>
                 `);
-                const uviIndex = [
-                    {
-                        index: 2,
-                        label: 'Low'
-                    },
-                    {
-                        index: 5,
-                        label: 'Moderate'
-                    },
-                    {
-                        index: 7,
-                        label: 'High'
-                    },
-                    {
-                        index: 10,
-                        label: 'Very High'
-                    },
-                    {
-                        index: 11,
-                        label: 'Extreme'
-                    }
-                ];
-               
+                              
                 let uviLabel = uviIndex[0].label;
                 uviIndex.forEach(function(uvi){
                     if (forecast.current.uvi > uvi.index) {

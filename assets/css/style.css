@@ -59,6 +59,8 @@ aside {
     padding:5px;
     margin:5px;
     text-align: center; 
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
        
 }
 
