@@ -15,14 +15,16 @@
 
 /* End of Pure CSS */
 body {
-    background-color: #2638c4;
-    background-size: 2000px;
+    background: no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 .pure-g {
     margin-top: 0px;
 }
-
 
 .dashboard-header {
     background-color: black;
@@ -123,3 +125,20 @@ article {
     font-style: italic;
     opacity: 100%;
 }
+
+.uv-index {
+    font-weight: bold;
+}
+
+/*clear history responsive css*/
+
+
+@media only screen and (max-width: 440px) {
+    .clear-history{
+        top: 40px;
+    }
+    .dashboard-header {
+        height: 80px;
+        text-align: center;
+    }
+  }
