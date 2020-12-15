@@ -58,7 +58,7 @@ function newCitySubmit () {
     }
 
     
-    localStorage.setItem('localHistory', JSON.stringify(citiesToSave))
+    localStorage.setItem('favoriteLocations', JSON.stringify(citiesToSave))
 
     //remove all event clickers before adding them to everything, including new button
     $('.loaded-city-button').off();
@@ -69,7 +69,7 @@ function newCitySubmit () {
 //loads from local storage all previous cities
 function loadSavedCities () {
     savedCities = [];
-    savedCities = JSON.parse(localStorage.getItem('localHistory'));    
+    savedCities = JSON.parse(localStorage.getItem('favoriteLocations'));    
     //skip if null
     if (savedCities != null) {
         savedCities.forEach(function(city) {
@@ -103,7 +103,7 @@ function preAPI() {
     // detailed city information
     function queryAPI (cityName, elName) {
         let errCheck = false;
-        var queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=3f2c8c7cb5bd8bc4f513f0917931a35c`
+        var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=imperial&appid=3f2c8c7cb5bd8bc4f513f0917931a35c`
         $.ajax({
             url: queryURL,
             method: "GET",            
@@ -213,7 +213,7 @@ function preAPI() {
                 for (i = 0; i < 5; i++) {   
                     $('#days-list').append(`<div class="pure-u-1-5 day-forecast"><ul class="pure-menu-list">
                     <li class="pure-menu-item">
-                        <img src="http://openweathermap.org/img/wn/${forecast.daily[i].weather[0].icon}.png">
+                        <img src="https://openweathermap.org/img/wn/${forecast.daily[i].weather[0].icon}.png">
                     </li>
                     <li class="pure-menu-item">
                         <p>Tempurature: ${forecast.daily[i].temp.day} \u00B0F</p>
