@@ -32,7 +32,7 @@ body {
     padding-left: 5%;
     height: 50px;
     padding-top: 10px;
-    opacity: 90%;
+    opacity: 80%;
     position: relative;
 }
 
@@ -48,7 +48,7 @@ main {
 
 aside {    
     padding: 15px;
-    opacity: 90%;    
+    opacity: 80%;    
     background-color: #0f1ebc;
     text-align: center; 
     border-radius: 25px;     
@@ -85,7 +85,7 @@ article {
     background-color: #0f1ebc;    
     border-radius: 15px;
     color: #ffffff;
-    opacity: 90%;
+    opacity: 80%;
     position: relative;
 }
 
