@@ -2,7 +2,7 @@
 
 ## Introduction
 
-* URL: [Work Day Planner](https://rasputinforever.github.io/My-Weather-Dashboard/)
+* URL: [My Weather Dashbaord](https://rasputinforever.github.io/My-Weather-Dashboard/)
 
 This application is a simple weather and weather forcast provider that allows the user to search a city by name or zipcode, then displays the current weather and a five-day forecast. The searched cities are then saved for next time the user visits the app.
 
