@@ -258,8 +258,7 @@ function preAPI() {
             }).then(function(bgImageRSP) {   
                 $('body').css('background-image', "url(" + bgImageRSP.hits[Math.floor(bgImageRSP.hits.length * Math.random())].largeImageURL + ")");
             });
-
-            }
+        }
        });       
     }
 }
