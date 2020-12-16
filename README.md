@@ -29,31 +29,31 @@ Using Pure CSS was an interesting alternative to Bootstrap, which was used in pr
 
 * Overview: The application shows a concise list of information about the weather searched.
 
-![Page Overview](Assets/images/overview.PNG)
+![Page Overview](assets/images/overview.PNG)
 
 * Dynamic Formatting: on Mobile, the page reads cleanly.
 
-![Search Bar](Assets/images/overview_mobile.PNG)
+![Search Bar](assets/images/overview_mobile.PNG)
 
 * Search Bar: The search bar provides the user a text area for new searches, but also provides buttons for each previously searched location that each returns their respective current weather information when clicked.
 
-![Search Bar](Assets/images/search_bar.PNG)
+![Search Bar](assets/images/search_bar.PNG)
 
 * Current Weather: The current weather and UV Index are provided. This information is listed.
 
-![Current Weather](Assets/images/current_weather.PNG)
+![Current Weather](assets/images/current_weather.PNG)
 
 * Five Day Forecast: a simple grid of information is provided about the days to come.
 
-![Five Day Forecast](Assets/images/five_day.PNG)
+![Five Day Forecast](assets/images/five_day.PNG)
 
 * Clear History: click to remove local storage and clear the search bar!
 
-![Delete History](Assets/images/delete_history.PNG)
+![Delete History](assets/images/delete_history.PNG)
 
 ## Functions Pathways & Events
 
-![Event Pathways](Assets/images/function_pathway.PNG)
+![Event Pathways](assets/images/function_pathway.PNG)
 
 ## Desired Features 
 
