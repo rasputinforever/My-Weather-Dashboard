@@ -1,16 +1,8 @@
-//todos
-    //re-add the object/math to get a wind-directoinal phrase conversion from degrees (use the bg image as a template)
-    //move the big icon over OR make it more transparent
-    //risk index not working correctly
-
-//ambitious
-    //get media triggers going, at the very leat get it working for mobile
-    //includes bg image, check out pure css
-
-//beyond ambitious
+//wish list
     //time-clock API to get a night/day tag for bg
+    //day names on forecast/current
 
-// variables used later //
+// objects used to convert numeric results to qualitative information //
 const uviIndex = [
     {
         index: 2,
@@ -31,6 +23,45 @@ const uviIndex = [
     {
         index: 11,
         label: 'Extreme'
+    }
+];
+
+const windDir = [
+    {
+        degree: 0,
+        name: 'North'
+    },
+    {
+        degree: 45,
+        name: 'North East'
+    },
+    {
+        degree: 90,
+        name: 'East'
+    },
+    {
+        degree: 135,
+        name: 'South East'
+    },
+    {
+        degree: 180,
+        name: 'South'
+    },
+    {
+        degree: 225,
+        name: 'South West'
+    },
+    {
+        degree: 270,
+        name: 'West'
+    },
+    {
+        degree: 315,
+        name: 'North West'
+    },
+    {
+        degree: 360,
+        name: 'North'
     }
 ];
 
@@ -168,6 +199,10 @@ function preAPI() {
            // if error, just stop here. errors still do this with this AJAX call format
             if (!errCheck) {
             $('#city-data').empty();
+            //converst wind direction degree to name of compass direction
+            newWindDir = windDir[Math.floor(8 * (response.wind.deg/360))].name;
+            
+            
             //the main body of information with pure css classes.
             $('#city-data').append(`
             <div class="pure-menu custom-restricted-width pure-u-1">
@@ -186,7 +221,7 @@ function preAPI() {
                         <p>Humidity: ${response.main.humidity}%</p>
                     </li>
                     <li class="pure-menu-item pure-u-1">
-                        <p>Wind Speed: ${response.wind.speed} mph, ${response.wind.deg}\u00B0</p>
+                        <p>Wind Speed: ${response.wind.speed} mph ${newWindDir}, ${response.wind.deg}\u00B0</p>
                     </li>
                     <li class="pure-menu-item pure-u-1">
                         <p>Cloud Coverage: ${response.clouds.all} %</p>
