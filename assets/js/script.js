@@ -202,7 +202,6 @@ function preAPI() {
             //converst wind direction degree to name of compass direction
             newWindDir = windDir[Math.floor(8 * (response.wind.deg/360))].name;
             
-            
             //the main body of information with pure css classes.
             $('#city-data').append(`
             <div class="pure-menu custom-restricted-width pure-u-1">
@@ -238,7 +237,7 @@ function preAPI() {
             url: fiveDayURL,
             method: "GET"
             }).then(function(forecast) {
-
+                
                 //get practical label for UVI result                
                 let labelCount = 0;                
                 uviIndex.forEach(function(uvi){
